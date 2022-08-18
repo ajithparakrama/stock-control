@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class categoryController extends Controller
@@ -13,7 +14,8 @@ class categoryController extends Controller
      */
     public function index()
     {
-        //
+         $category = category::paginate(1); 
+        return view('category.index',compact('category'));
     }
 
     /**
@@ -23,7 +25,7 @@ class categoryController extends Controller
      */
     public function create()
     {
-        //
+         return view('category.create');
     }
 
     /**
@@ -34,7 +36,15 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            ['name'=>'required|min:5|max:255']
+        );
+
+        category::create([
+            'name'=>$request->name
+        ]);
+
+        return redirect()->route('category.index')->with('message','Category Created');
     }
 
     /**
@@ -54,9 +64,9 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(category $category)
     {
-        //
+         return view('category.edit',compact('category'));
     }
 
     /**
@@ -66,9 +76,18 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, category $category)
     {
-        //
+        $request->validate(
+            ['name'=>'required|min:5|max:255']
+        );
+
+        $category->update([
+            'name'=>$request->name
+        ]);
+
+        return redirect()->route('category.index')->with('message','Category Updated');
+
     }
 
     /**
