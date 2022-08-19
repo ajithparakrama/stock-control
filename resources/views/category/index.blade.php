@@ -7,13 +7,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create Category</h1>
+            <h1>All Category</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"><a href="#">Category</a></li>
-              <li class="breadcrumb-item active">Create Category</li>
+              <li class="breadcrumb-item active">All Category</li>
             </ol>
           </div>
         </div>
@@ -45,6 +45,12 @@
                             <td>{{ $item->name }}</td>
                             <td>
                                 <a href="{{ route('category.edit',$item->id) }}" class="btn btn-sm btn-info"><i class="fa fa-pen"></i></a>
+                              <form action="{{ route('category.destroy',$item->id) }}" method="POST">
+                              @csrf
+                                @method('DELETE')
+                              <input type="submit" value="Delete" class="btn btn-sm btn-danger">
+                              </form>
+
                             </td>
                             </tr>    
 

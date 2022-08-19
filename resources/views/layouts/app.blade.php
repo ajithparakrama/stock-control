@@ -10,7 +10,7 @@
           crossorigin="anonymous"/>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('plugin/toastr/toastr.css') }}">
     @yield('third_party_stylesheets')
 
     @stack('page_css')
@@ -86,5 +86,38 @@
 @yield('third_party_scripts')
 
 @stack('page_scripts')
+
+
+<script src="{{ asset('plugin/jquery/jquery.min.js') }}" ></script>
+<script src="{{ asset('plugin/toastr/toastr.min.js') }}" defer></script>
+@yield('third_party_scripts')
+
+@stack('page_scripts')
+
+@if(session()->has('info'))
+<script> 
+    $(document).ready(function(){ 
+ toastr.info({{ session()->get('info') }})   
+}); 
+</script> 
+@endif
+
+@if(session()->has('danger'))
+<script> 
+    $(document).ready(function(){ 
+ toastr.error('{{ session()->get('danger') }}')   
+}); 
+</script> 
+@endif
+
+@if(session()->has('message'))
+<script> 
+    $(document).ready(function(){ 
+ toastr.success('{{ session()->get('message') }}')   
+}); 
+</script>
+@endif
+ 
+
 </body>
 </html>

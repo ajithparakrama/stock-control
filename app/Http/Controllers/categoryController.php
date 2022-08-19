@@ -14,8 +14,19 @@ class categoryController extends Controller
      */
     public function index()
     {
-         $category = category::paginate(1); 
+         $category = category::where('active','=',1)->paginate(10); 
         return view('category.index',compact('category'));
+    }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function inactive()
+    {
+         $category = category::where('active','=',0)->paginate(10); 
+        return view('category.inactive',compact('category'));
     }
 
     /**
@@ -96,8 +107,19 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(category $category)
     {
-        //
+      //   $category->delete();
+        $category->update([
+            'active'=>0
+        ]);
+         return redirect()->route('category.index')->with('danger','Category Deleted');
+    }
+
+    public function activate(category $category){
+         $category->update([
+              'active'=>1
+        ]);
+          return redirect()->route('category.index')->with('message','Category Deleted');
     }
 }

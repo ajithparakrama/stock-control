@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\categoryController;
 
 /*
@@ -20,6 +21,10 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('category/inactive',[categoryController::class,'inactive'])->name('category.inactive');
+Route::POST('category/activate/{category}',[categoryController::class,'activate'])->name('category.activate');
+
 Route::resource('category', categoryController::class);
+Route::resource('product', ProductController::class);
 
 Auth::routes();
